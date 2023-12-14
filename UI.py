@@ -24,12 +24,14 @@ def input_table():
 
             if not cell_inpt[-1].isdigit():
                 cell.location = cell_inpt[-1]
-                cell.weight = int(cell_inpt[:-1])
+                cell.init_weight = int(cell_inpt[:-1])
             else:
-                cell.weight = int(cell_inpt)
+                cell.init_weight = int(cell_inpt)
 
             table.cells[x][y] = cell
     
+    table.add_successors()
+
     return table
 
 
