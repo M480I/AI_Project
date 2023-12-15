@@ -25,6 +25,8 @@ def input_table():
             if not cell_inpt[-1].isdigit():
                 cell.location = cell_inpt[-1]
                 cell.init_weight = int(cell_inpt[:-1])
+                if cell.location == 'T':
+                    table.add_destination(cell)
             else:
                 cell.init_weight = int(cell_inpt)
 

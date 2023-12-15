@@ -6,7 +6,7 @@ bonus_map = {"C": 10,
              }
 
 
-class Dir_cell:
+class DirCell:
     
     def __init__(self, direction, cell) -> None:
         self.cell = cell
@@ -27,17 +27,30 @@ class Cell:
         self.location = location
         
         self.successors: list[dict] = []
+
         self.mark = False
+        self.eaten_count = 0
+        self.visited_dest_count = 0
 
 
-    def add_successor(self, *other: list[Dir_cell]):
+    def add_successor(self, *other: list[DirCell]):
         self.successors.append(*other)
 
 
-    @property
-    def weight(self):
+    def weight(self, has_bonus):
         bonus = 0 if self.location is None else bonus_map[self.location] 
-        return self.init_weight - (not self.mark) * bonus
+        return self.init_weight - (has_bonus) * bonus
+    
+
+    def reset(self):
+        self.mark = False
+        self.eaten_count = 0
+        self.visited_dest_count = 0
+
+    
+    @property
+    def coordinate(self):
+        return (self.x, self.y)
 
     
     def __str__(self):

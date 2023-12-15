@@ -1,4 +1,4 @@
-from cell import Dir_cell
+from cell import DirCell
 
 
 class Table:
@@ -6,12 +6,23 @@ class Table:
     def __init__(self, row_count, column_count) -> None:
         self.row_count = row_count
         self.column_count = column_count
+
         self.cells = [[None for _ in range(column_count)] for _ in range(row_count)]
+        self.destinations = []
 
 
     def add_cell(self, x, y, cell) -> None:
         self.cells[x][y] = cell
     
+
+    def add_destination(self, *cells):
+        self.destinations.append(*cells)
+
+
+    def cell_of_coordinate(self, coordinate):
+        x, y = coordinate
+        return self.cells[x][y]
+
 
     def add_successors(self):
 
@@ -34,8 +45,14 @@ class Table:
                     new_x, new_y = (x + d[1][0], y + d[1][1])
                     if is_valid(new_x, new_y):
                         self.cells[x][y].add_successor(
-                            Dir_cell(d[0], self.cells[new_x][new_y])
+                            DirCell(d[0], self.cells[new_x][new_y])
                         )
+
+
+    def reset(self):
+        for x in range(self.row_count):
+            for y in range(self.column_count):
+                self.cells[x][y].reset()
 
 
     def __str__(self) -> str:
