@@ -49,7 +49,7 @@ class Cell:
 
     
     @property
-    def coordinate(self):
+    def coordinates(self):
         return (self.x, self.y)
 
     

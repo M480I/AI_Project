@@ -19,8 +19,8 @@ class Table:
         self.destinations.append(*cells)
 
 
-    def cell_of_coordinate(self, coordinate):
-        x, y = coordinate
+    def cell_of_coordinates(self, coordinates):
+        x, y = coordinates
         return self.cells[x][y]
 
 
