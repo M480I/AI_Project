@@ -1,6 +1,7 @@
 from UI import input_table
-from dfs import *
-from bfs import *
+from dfs import DFS
+# from bfs import BFS
+from bfs1 import BFS
 from table import Table
 
 
