@@ -47,7 +47,7 @@ class DFS:
         if new_cell.location == 'T' and not new_cell.mark:
             self.visited_dest_count += value
         
-        if new_cell.location in ['C', 'I', 'B'] and not new_cell.mark:
+        elif new_cell.location in ['C', 'I', 'B'] and not new_cell.mark:
             self.eaten_count += value
             
 

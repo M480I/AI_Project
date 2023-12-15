@@ -2,6 +2,7 @@ from table import Table
 from cell import *
 
 import time
+import heapq
 
 
 class UCS():
