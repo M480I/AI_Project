@@ -56,5 +56,5 @@ class Cell:
     def __str__(self):
         if not self.is_open:
             return "X"
-        return f"({self.x + 1}, {self.y + 1}, {'N' if self.location is None else self.location})"
+        return f"{self.init_weight}{'' if self.location is None else self.location}"
     

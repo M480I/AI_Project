@@ -59,6 +59,7 @@ class Table:
         res = ""
         for x in range(self.row_count):
             for y in range(self.column_count):
-                res += str(self.cells[x][y]) + " "
-            res += "\n"
+                space = 4 - len(self.cells[x][y].__str__())
+                res += " " * (space // 2) + self.cells[x][y].__str__() + "  " * (space // 2) + "|"
+            res += "\n" + "-" * (self.column_count * 6) + "\n"
         return res
