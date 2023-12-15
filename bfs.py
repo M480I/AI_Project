@@ -22,6 +22,7 @@ class BFS:
 
         self.energy:list[int] = []
         self.index = 0
+        self.fringe = self.init_fringe()
 
         self.final_path = []
         self.success = False
@@ -36,10 +37,21 @@ class BFS:
         table.reset()
 
 
-    def put_root(self) -> Queue:
-        to_open = Queue()
+    def init_fringe(self):
+        return Queue()    
+    
 
-        to_open.put(0)
+    def put_fringe(self, index):
+        self.fringe.put(index)
+
+
+    def get_fringe(self):
+        return self.fringe.get()
+
+
+    def put_root(self) -> None:
+
+        self.put_fringe(0)
         self.coords_of_index.append(self.table.cells[0][0].coordinates)
         self.parent.append(-1)
         self.pre_move.append("")
@@ -49,7 +61,6 @@ class BFS:
         self.visited_count.append((0, 0))
         self.energy.append(500 - self.table.cells[0][0].weight(False))
 
-        return to_open
     
 
     def can_open(self, cell, parent) -> bool:
@@ -116,11 +127,11 @@ class BFS:
     
     def search(self):
         
-        to_open = self.put_root()
+        self.put_root()
 
-        while not to_open.empty():
+        while not self.fringe.empty():
 
-            parent = to_open.get()
+            parent = self.get_fringe()
             cell = self.table.cell_of_coordinates(self.coords_of_index[parent])
 
             for next_cell in cell.successors:
@@ -131,7 +142,7 @@ class BFS:
                 self.index += 1
 
 
-                to_open.put(self.index)
+                self.put_fringe(self.index)
                 self.coords_of_index.append(next_cell.cell.coordinates)
                 self.parent.append(parent)
                 self.energy.append(self.energy[parent] - next_cell.cell.weight(self.has_bonus(next_cell.cell, parent)))
