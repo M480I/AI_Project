@@ -4,8 +4,22 @@ from bfs import BFS
 
 import time
 from queue import PriorityQueue
-import heapq
 
 
 class UCS(BFS):
-    pass
+
+    def set_title(self):
+        return "UCS"
+
+
+    def init_fringe(self):
+        return PriorityQueue()
+    
+
+    def put_fringe(self, index):
+        self.fringe.put((-self.energy[index], index))
+    
+
+    def get_fringe(self):
+        return self.fringe.get()[1]
+    

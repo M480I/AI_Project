@@ -10,6 +10,7 @@ class BFS:
     
     def __init__(self, table: Table) -> None:
         
+        self.title = self.set_title()
         self.table = table
         self.coords_of_index: list[tuple[int, int]] = []
         self.parent:list[int] = []
@@ -36,6 +37,10 @@ class BFS:
 
         table.reset()
 
+    
+    def set_title(self):
+        return "DFS"
+
 
     def init_fringe(self):
         return Queue()    
@@ -50,7 +55,8 @@ class BFS:
 
 
     def put_root(self) -> None:
-
+        
+        self.energy.append(500 - self.table.cells[0][0].weight(False))
         self.put_fringe(0)
         self.coords_of_index.append(self.table.cells[0][0].coordinates)
         self.parent.append(-1)
@@ -59,8 +65,6 @@ class BFS:
         self.visited_bonuses.append(set({}))
         self.coords_count.append({(0, 0, 0, 0)})
         self.visited_count.append((0, 0))
-        self.energy.append(500 - self.table.cells[0][0].weight(False))
-
     
 
     def can_open(self, cell, parent) -> bool:
@@ -142,10 +146,10 @@ class BFS:
                 self.index += 1
 
 
+                self.energy.append(self.energy[parent] - next_cell.cell.weight(self.has_bonus(next_cell.cell, parent)))
                 self.put_fringe(self.index)
                 self.coords_of_index.append(next_cell.cell.coordinates)
                 self.parent.append(parent)
-                self.energy.append(self.energy[parent] - next_cell.cell.weight(self.has_bonus(next_cell.cell, parent)))
                 self.pre_move.append(next_cell.direction)
                 self.update_dest_list(next_cell.cell, parent)
                 self.update_bonus_list(next_cell.cell, parent)

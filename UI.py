@@ -40,12 +40,13 @@ def input_table():
     return table
 
 
-def algorithm_result(name, algo) -> str:
+def algorithm_result(algo) -> str:
     res = ("-" * 100 + "\n")
-    res += name + "\n"
+    res += algo.title + "\n"
     res += f"{'Success' if algo.success else 'Failure'}\n"
-    res += f"Path: {''.join(algo.final_path)}\n"
-    res += f"Energy: {algo.final_energy}\n"
+    if algo.success:
+        res += f"Path: {''.join(algo.final_path)}\n"
+        res += f"Energy: {algo.final_energy}\n"
     res += f"Time: {algo.time}\n"
     return res
 
@@ -55,12 +56,14 @@ def do_search(table: Table, mode: tuple) -> str:
     res = ""
 
     if "all" in mode:
-        mode = ("dfs", "bfs")
+        mode = ("dfs", "bfs", "ucs")
 
     if "dfs" in mode:
-        res += algorithm_result("DFS", DFS(table))
+        res += algorithm_result(DFS(table))
     if "bfs" in mode:
-        res += algorithm_result("BFS", BFS(table))
+        res += algorithm_result(BFS(table))
+    if "ucs" in mode:
+        res += algorithm_result(UCS(table))
 
     res += ("-" * 100)
 

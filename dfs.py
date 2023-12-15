@@ -7,7 +7,8 @@ import time
 class DFS:
     
     def __init__(self, table: Table) -> None:
-        
+
+        self.title = "DFS"
         self.table = table
 
         self.success = False
