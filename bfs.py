@@ -23,8 +23,8 @@ class BFS:
         self.energy:list[int] = []
         self.index = 0
 
-        self.path = []
-        self.succuss = False
+        self.final_path = []
+        self.success = False
         self.final_energy = None
         
         start_time = time.time()
@@ -112,9 +112,9 @@ class BFS:
     def find_path(self):
         parent = self.index
         while (self.parent[parent] != -1):
-            self.path.append(self.pre_move[parent])
+            self.final_path.append(self.pre_move[parent])
             parent = self.parent[parent]
-        self.path.reverse()
+        self.final_path.reverse()
     
     
     def bfs(self):
@@ -145,10 +145,10 @@ class BFS:
 
 
                 if self.is_search_done():
-                    self.succuss = True
+                    self.success = True
                     self.final_energy = self.energy[self.index]
                     self.find_path()
                     break
 
-            if self.succuss:
+            if self.success:
                 break

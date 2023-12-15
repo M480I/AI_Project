@@ -11,7 +11,7 @@ class DFS:
         self.table = table
 
         self.success = False
-        self.energy = 500 - table.cells[0][0].weight(0)
+        self.final_energy = 500 - table.cells[0][0].weight(0)
         self.path = []
         self.final_path = []
 
@@ -77,7 +77,7 @@ class DFS:
             next_cell.cell.visited_dest_count = self.visited_dest_count
             self.update_visited(next_cell.cell, 1)
             self.path.append(next_cell.direction) 
-            self.energy -= next_cell.cell.weight(not next_cell.cell.mark)
+            self.final_energy -= next_cell.cell.weight(not next_cell.cell.mark)
             pre_mark = next_cell.cell.mark
             next_cell.cell.mark = True
 
@@ -87,7 +87,7 @@ class DFS:
                 return
             
             next_cell.cell.mark = pre_mark
-            self.energy += next_cell.cell.weight(not next_cell.cell.mark)
+            self.final_energy += next_cell.cell.weight(not next_cell.cell.mark)
             self.path.pop()
             self.update_visited(next_cell.cell, -1)
             next_cell.cell.eaten_count = pre_eaten_count
