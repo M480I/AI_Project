@@ -8,7 +8,7 @@ class Table:
         self.column_count = column_count
 
         self.cells = [[None for _ in range(column_count)] for _ in range(row_count)]
-        self.destinations = []
+        self.destinations = set({})
 
 
     def add_cell(self, x, y, cell) -> None:
@@ -16,7 +16,7 @@ class Table:
     
 
     def add_destination(self, *cells):
-        self.destinations.append(*cells)
+        self.destinations.add(*cells)
 
 
     def cell_of_coordinates(self, coordinates):

@@ -39,7 +39,7 @@ class BFS:
 
     
     def set_title(self):
-        return "DFS"
+        return "BFS"
 
 
     def init_fringe(self):
