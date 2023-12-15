@@ -1,13 +1,11 @@
 from table import Table
 from cell import *
+from bfs import BFS
 
 import time
+from queue import PriorityQueue
 import heapq
 
 
-class UCS():
-
-    def __init__(self, table: Table) -> None:
-
-        self.table = table
-        self.coord_of_index: list[tuple(int, int)]
+class UCS(BFS):
+    pass

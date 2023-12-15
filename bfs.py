@@ -11,14 +11,14 @@ class BFS:
     def __init__(self, table: Table) -> None:
         
         self.table = table
-        self.cell_of_index: list[tuple(int, int)] = []
+        self.coords_of_index: list[tuple[int, int]] = []
         self.parent:list[int] = []
         self.pre_move:list[str] = []
-        self.visited_dests:list[set[tuple(int, int)]] = []
-        self.visited_bonuses: list[set[tuple(int, int)]] = []
+        self.visited_dests:list[set[tuple[int, int]]] = []
+        self.visited_bonuses: list[set[tuple[int, int]]] = []
 
-        self.coords_count: list[set[tuple(int, int, int, int)]] = []
-        self.visited_count: list[tuple(int, int)] = []
+        self.coords_count: list[set[tuple[int, int, int, int]]] = []
+        self.visited_count: list[tuple[int, int]] = []
 
         self.energy:list[int] = []
         self.index = 0
@@ -29,7 +29,7 @@ class BFS:
         
         start_time = time.time()
         
-        self.bfs()
+        self.search()
 
         self.time = Decimal(time.time() - start_time)
 
@@ -40,7 +40,7 @@ class BFS:
         to_open = Queue()
 
         to_open.put(0)
-        self.cell_of_index.append(self.table.cells[0][0].coordinates)
+        self.coords_of_index.append(self.table.cells[0][0].coordinates)
         self.parent.append(-1)
         self.pre_move.append("")
         self.visited_dests.append(set({}))
@@ -56,9 +56,8 @@ class BFS:
 
         eaten, visited_dest = self.visited_count[parent]
 
-        if cell.location == 'T':
-            if cell.coordinates in self.visited_dests[parent]:
-                return False
+        if cell.location == 'T' and cell.coordinates in self.visited_dests[parent]:
+            return False
         
         elif (*cell.coordinates, eaten, visited_dest) in self.coords_count[parent]:
             return False
@@ -98,15 +97,13 @@ class BFS:
 
     def update_bonus_list(self, cell, parent):
         sett = self.visited_bonuses[parent].copy()
-        if cell.location in ['I', 'C', 'visited_dest']:
+        if cell.location in ['I', 'C', 'B']:
             sett.add(cell.coordinates)
         self.visited_bonuses.append(sett)
 
 
     def is_search_done(self):
-        if len(self.visited_dests[self.index]) == len(self.table.destinations):
-            return True
-        return False
+        return len(self.visited_dests[self.index]) == len(self.table.destinations)
 
 
     def find_path(self):
@@ -117,14 +114,14 @@ class BFS:
         self.final_path.reverse()
     
     
-    def bfs(self):
+    def search(self):
         
         to_open = self.put_root()
 
         while not to_open.empty():
 
             parent = to_open.get()
-            cell = self.table.cell_of_coordinates(self.cell_of_index[parent])
+            cell = self.table.cell_of_coordinates(self.coords_of_index[parent])
 
             for next_cell in cell.successors:
                 
@@ -135,7 +132,7 @@ class BFS:
 
 
                 to_open.put(self.index)
-                self.cell_of_index.append(next_cell.cell.coordinates)
+                self.coords_of_index.append(next_cell.cell.coordinates)
                 self.parent.append(parent)
                 self.energy.append(self.energy[parent] - next_cell.cell.weight(self.has_bonus(next_cell.cell, parent)))
                 self.pre_move.append(next_cell.direction)
