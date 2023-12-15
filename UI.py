@@ -3,6 +3,9 @@ from cell import Cell
 from dfs import DFS
 from bfs import BFS
 from ucs import UCS
+from ids import IDS
+
+import time
 
 
 def input_table():
@@ -55,8 +58,25 @@ def do_search(table: Table, mode: tuple) -> str:
 
     res = ""
 
+    if not len(mode):
+        res = """
+ ________________________
+< Coding with kittens! >
+ ------------------------
+        \   /\_/\   /
+         \\\\ ( o.o )//
+          \\\\ > ^ < //
+           \\\\_____//
+           /       \\
+          |  |   |  |
+          |  |   |  |
+
+"""
+
     if "all" in mode:
-        mode = ("dfs", "bfs", "ucs")
+        mode = ("dfs", "bfs", "ucs", "ids")
+
+    start_time = time.time()
 
     if "dfs" in mode:
         res += algorithm_result(DFS(table))
@@ -64,7 +84,11 @@ def do_search(table: Table, mode: tuple) -> str:
         res += algorithm_result(BFS(table))
     if "ucs" in mode:
         res += algorithm_result(UCS(table))
+    if "ids" in mode:
+        res += algorithm_result(IDS(table))
 
-    res += ("-" * 100)
+    res += ("-" * 100) + "\n"
+
+    res += f"Total time: {time.time() - start_time}"
 
     return res

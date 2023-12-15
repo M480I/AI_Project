@@ -1,5 +1,5 @@
 from UI import input_table, do_search
 
 
-result = do_search(input_table(), ("all"))
+result = do_search(input_table(), ())
 print(result)
