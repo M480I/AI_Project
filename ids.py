@@ -18,7 +18,7 @@ class IDS(DFS):
         while not self.success:
             self.init_search()
             self.limit = i
-            self.dfs(self.table.cells[0][0])
+            self.dfs(self.table.start)
             self.table.reset()
             if max_height == self.max_height:
                 break

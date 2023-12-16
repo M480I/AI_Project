@@ -23,11 +23,11 @@ class DFS:
 
     def init_search(self):
 
-        self.final_energy = 500 - self.table.cells[0][0].weight(0)
+        self.final_energy = 500 - self.table.start.weight(0)
         self.final_path = []
         self.eaten_count = 0
         self.visited_dest_count = 0
-        self.table.cells[0][0].mark = True
+        self.table.start.mark = True
         self.height = 0
 
     
@@ -37,7 +37,7 @@ class DFS:
 
         start_time = time.time()
 
-        self.dfs(self.table.cells[0][0])
+        self.dfs(self.table.start)
 
         self.time = (time.time() - start_time)
 

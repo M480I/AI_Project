@@ -11,9 +11,11 @@ class BFS:
         
         self.title = self.set_title()
         self.table = table
+
         self.coords_of_index: list[tuple[int, int]] = []
         self.parent:list[int] = []
         self.pre_move:list[str] = []
+        
         self.visited_dests:list[set[tuple[int, int]]] = []
         self.visited_bonuses: list[set[tuple[int, int]]] = []
 
@@ -56,14 +58,15 @@ class BFS:
 
     def put_root(self) -> None:
         
-        self.energy.append(500 - self.table.cells[0][0].weight(False))
+        x, y = self.table.start.coordinates
+        self.energy.append(500 - self.table.start.weight(False))
         self.total_bonus.append(0)
-        self.coords_of_index.append(self.table.cells[0][0].coordinates)
+        self.coords_of_index.append(self.table.start.coordinates)
         self.parent.append(-1)
         self.pre_move.append("")
         self.visited_dests.append(set({}))
         self.visited_bonuses.append(set({}))
-        self.coords_count.append({(0, 0, 0, 0)})
+        self.coords_count.append({(x, y, 0, 0)})
         self.visited_count.append((0, 0))
         self.put_fringe(0)
     
@@ -118,12 +121,12 @@ class BFS:
         self.visited_bonuses.append(sett)
 
 
-    def is_search_done(self):
-        return len(self.visited_dests[self.index]) == len(self.table.destinations)
+    def is_search_done(self, index):
+        return len(self.visited_dests[index]) == len(self.table.destinations)
 
 
-    def find_path(self):
-        parent = self.index
+    def find_path(self, index):
+        parent = index
         while (self.parent[parent] != -1):
             self.final_path.append(self.pre_move[parent])
             parent = self.parent[parent]
@@ -139,6 +142,12 @@ class BFS:
             parent = self.get_fringe()
             cell = self.table.cell_of_coordinates(self.coords_of_index[parent])
 
+            if self.is_search_done(parent):
+                self.success = True
+                self.final_energy = self.energy[parent]
+                self.find_path(parent)
+                break
+        
             for next_cell in cell.successors:
                 
                 if not self.can_open(next_cell.cell, parent):
@@ -160,12 +169,11 @@ class BFS:
                 self.update_visited_count(next_cell.cell, parent)
                 self.put_fringe(self.index)
 
-
-                if self.is_search_done():
+                if self.title == "BFS" and self.is_search_done(self.index):
                     self.success = True
                     self.final_energy = self.energy[self.index]
-                    self.find_path()
+                    self.find_path(self.index)
                     break
-
+            
             if self.success:
                 break
