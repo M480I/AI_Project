@@ -11,10 +11,11 @@ class Table:
         self.destinations: set[Cell] = set({})
         self.destinations_coords: set[tuple[int, int]] = set({})
         self.total_bonus = 0
+        self.min_init_weight = None
         self.start = None
 
 
-    def add_cell(self, x, y, cell) -> None:
+    def add_cell(self, x, y, cell: Cell) -> None:
         self.cells[x][y] = cell
 
         if cell.location is not None:
@@ -22,9 +23,15 @@ class Table:
             if cell.location == 'R':
                self.start = cell
             if cell.location == 'T':
-                self.add_destination(cell)    
+                self.add_destination(cell)   
 
-    def add_destination(self, cell):
+        if cell.init_weight is not None:
+            if self.min_init_weight is None:
+                self.min_init_weight = cell.init_weight
+            else: 
+                self.min_init_weight = min(self.min_init_weight, cell.init_weight)
+
+    def add_destination(self, cell: Cell):
         self.destinations.add(cell)
         self.destinations_coords.add(cell.coordinates)
 
