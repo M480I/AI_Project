@@ -21,7 +21,8 @@ class Table:
             self.total_bonus += bonus_map[cell.location]
             if cell.location == 'R':
                self.start = cell
-    
+            if cell.location == 'T':
+                self.add_destination(cell)    
 
     def add_destination(self, cell):
         self.destinations.add(cell)

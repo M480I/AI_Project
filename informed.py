@@ -1,7 +1,7 @@
-from bfs import BFS
+from ucs import UCS
 
 
-class Greedy(BFS):
+class Greedy(UCS):
 
     def heuristic(self, index):
         possible_bonus = self.table.total_bonus - self.total_bonus

@@ -31,8 +31,7 @@ def input_table() -> Table:
             if not cell_inpt[-1].isdigit():
                 cell.location = cell_inpt[-1]
                 cell.init_weight = int(cell_inpt[:-1])
-                if cell.location == 'T':
-                    table.add_destination(cell)
+
             else:
                 cell.init_weight = int(cell_inpt)
 
@@ -60,16 +59,16 @@ def do_search(table: Table, mode: tuple[str]) -> str:
 
     if not len(mode):
         res = """
- ________________________
-< Coding with kittens! >
  ------------------------
-        \   /\_/\   /
-         \\\\ ( o.o )//
-          \\\\ > ^ < //
-           \\\\_____//
-           /       \\
-          |  |   |  |
-          |  |   |  |
+< Coding without limits! >
+ ------------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\\
+                ||----w |
+                ||     ||
+
+
 
 """
 
