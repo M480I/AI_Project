@@ -79,3 +79,15 @@ X X 1 X X 50 2 1C 1 X
 1R 5 1I
 1 X 1
 1 1 2T
+
+
+3 3
+1T 3 X
+2C 1R 2T
+3T X 1I
+
+
+3 3
+X 2T 2T
+X 2 X
+2T 2T 3R

@@ -26,7 +26,7 @@ class Cell:
         self.init_weight = init_weight
         self.location = location
         
-        self.successors: list[dict] = []
+        self.successors: list[DirCell] = []
 
         self.mark = False
         self.eaten_count = 0
@@ -37,7 +37,7 @@ class Cell:
         self.successors.append(*other)
 
 
-    def weight(self, has_bonus):
+    def weight(self, has_bonus: bool):
         bonus = 0 if self.location is None else bonus_map[self.location] 
         return self.init_weight - (has_bonus) * bonus
     

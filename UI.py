@@ -8,7 +8,7 @@ from ids import IDS
 import time
 
 
-def input_table():
+def input_table() -> Table:
 
     row_count, column_count = map(int, input().split(" "))
 
@@ -54,7 +54,7 @@ def algorithm_result(algo) -> str:
     return res
 
 
-def do_search(table: Table, mode: tuple) -> str:
+def do_search(table: Table, mode: tuple[str]) -> str:
 
     res = ""
 

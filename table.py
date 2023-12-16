@@ -1,4 +1,4 @@
-from cell import DirCell, bonus_map
+from cell import DirCell, bonus_map, Cell
 
 
 class Table:
@@ -8,8 +8,10 @@ class Table:
         self.column_count = column_count
 
         self.cells = [[None for _ in range(column_count)] for _ in range(row_count)]
-        self.destinations = set({})
+        self.destinations: set[Cell] = set({})
+        self.destinations_coords: set[tuple[int, int]] = set({})
         self.total_bonus = 0
+        self.start = None
 
 
     def add_cell(self, x, y, cell) -> None:
@@ -17,14 +19,16 @@ class Table:
 
         if cell.location is not None:
             self.total_bonus += bonus_map[cell.location]
-
+            if cell.location == 'R':
+               self.start = cell
     
 
-    def add_destination(self, *cells):
-        self.destinations.add(*cells)
+    def add_destination(self, cell):
+        self.destinations.add(cell)
+        self.destinations_coords.add(cell.coordinates)
 
 
-    def cell_of_coordinates(self, coordinates):
+    def cell_of_coordinates(self, coordinates: tuple[int, int]):
         x, y = coordinates
         return self.cells[x][y]
 
