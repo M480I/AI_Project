@@ -1,9 +1,8 @@
 from table import Table
-from cell import Cell, DirCell
+from cell import Cell, DirCell, bonus_map
 
 import time
 from queue import Queue
-from decimal import Decimal
 
 
 class BFS:
@@ -22,6 +21,7 @@ class BFS:
         self.visited_count: list[tuple[int, int]] = []
 
         self.energy:list[int] = []
+        self.total_bonus:list[int] = []
         self.index = 0
         self.fringe = self.init_fringe()
 
@@ -33,7 +33,7 @@ class BFS:
         
         self.search()
 
-        self.time = Decimal(time.time() - start_time)
+        self.time = time.time() - start_time
 
         table.reset()
 
@@ -57,7 +57,7 @@ class BFS:
     def put_root(self) -> None:
         
         self.energy.append(500 - self.table.cells[0][0].weight(False))
-        self.put_fringe(0)
+        self.total_bonus.append(0)
         self.coords_of_index.append(self.table.cells[0][0].coordinates)
         self.parent.append(-1)
         self.pre_move.append("")
@@ -65,6 +65,7 @@ class BFS:
         self.visited_bonuses.append(set({}))
         self.coords_count.append({(0, 0, 0, 0)})
         self.visited_count.append((0, 0))
+        self.put_fringe(0)
     
 
     def can_open(self, cell, parent) -> bool:
@@ -147,13 +148,17 @@ class BFS:
 
 
                 self.energy.append(self.energy[parent] - next_cell.cell.weight(self.has_bonus(next_cell.cell, parent)))
-                self.put_fringe(self.index)
+                if next_cell.cell.location is not None and self.has_bonus(next_cell.cell, parent):
+                    self.total_bonus.append(bonus_map[next_cell.cell.location] + self.total_bonus[parent])
+                else:
+                    self.total_bonus.append(self.total_bonus[parent])
                 self.coords_of_index.append(next_cell.cell.coordinates)
                 self.parent.append(parent)
                 self.pre_move.append(next_cell.direction)
                 self.update_dest_list(next_cell.cell, parent)
                 self.update_bonus_list(next_cell.cell, parent)
                 self.update_visited_count(next_cell.cell, parent)
+                self.put_fringe(self.index)
 
 
                 if self.is_search_done():

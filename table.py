@@ -1,4 +1,4 @@
-from cell import DirCell
+from cell import DirCell, bonus_map
 
 
 class Table:
@@ -9,10 +9,15 @@ class Table:
 
         self.cells = [[None for _ in range(column_count)] for _ in range(row_count)]
         self.destinations = set({})
+        self.total_bonus = 0
 
 
     def add_cell(self, x, y, cell) -> None:
         self.cells[x][y] = cell
+
+        if cell.location is not None:
+            self.total_bonus += bonus_map[cell.location]
+
     
 
     def add_destination(self, *cells):

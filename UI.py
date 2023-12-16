@@ -23,7 +23,7 @@ def input_table():
 
             if cell_inpt == "X":
                 cell.is_open = False
-                table.cells[x][y] = cell
+                table.add_cell(x, y, cell)
                 continue
             
             cell.is_open = True
@@ -36,7 +36,7 @@ def input_table():
             else:
                 cell.init_weight = int(cell_inpt)
 
-            table.cells[x][y] = cell
+            table.add_cell(x, y, cell)
     
     table.add_successors()
 
