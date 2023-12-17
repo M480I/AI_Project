@@ -9,9 +9,6 @@ def man_distance(cell_1, cell_2):
 
 def cal_mst(nodes: list[tuple[int, int]]):
 
-    # print("-" * 100)
-    # print(nodes)
-
     def root(u):
         if par[u] == u:
             return u
@@ -35,7 +32,6 @@ def cal_mst(nodes: list[tuple[int, int]]):
     while not edges.empty():
 
         edge = edges.get()
-        # print(edge, end=" ")
         weight, i, j = edge
 
         if root(i) != root(j):
@@ -43,11 +39,5 @@ def cal_mst(nodes: list[tuple[int, int]]):
             res += weight
             mst_edges.append(edge)
 
-    # print()
-    # print(mst_edges, res)
 
     return res
-
-
-nodes = [(2, 9), (5, 5), (3, 4)]
-cal_mst(nodes)
