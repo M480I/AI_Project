@@ -4,6 +4,7 @@ from dfs import DFS
 from bfs import BFS
 from ucs import UCS
 from ids import IDS
+from informed import A_star, Greedy
 
 import time
 
@@ -73,7 +74,7 @@ def do_search(table: Table, mode: tuple[str]) -> str:
 """
 
     if "all" in mode:
-        mode = ("dfs", "bfs", "ucs", "ids")
+        mode = ("dfs", "bfs", "ucs", "ids", "greedy", "a*")
 
     start_time = time.time()
 
@@ -85,6 +86,10 @@ def do_search(table: Table, mode: tuple[str]) -> str:
         res += algorithm_result(UCS(table))
     if "ids" in mode:
         res += algorithm_result(IDS(table))
+    if "greedy" in mode:
+        res += algorithm_result(Greedy(table))
+    if "a*" in mode:
+        res += algorithm_result(A_star(table))
 
     res += ("-" * 100) + "\n"
 
