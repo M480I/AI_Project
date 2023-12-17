@@ -93,6 +93,6 @@ def do_search(table: Table, mode: tuple[str]) -> str:
 
     res += ("-" * 100) + "\n"
 
-    res += f"Total time: {time.time() - start_time}"
+    res += f"Total time: {time.time() - start_time}\n"
 
     return res

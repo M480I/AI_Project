@@ -169,7 +169,7 @@ class BFS:
                 self.update_visited_count(next_cell.cell, parent)
                 self.put_fringe(self.index)
 
-                if self.title == "BFS" and self.is_search_done(self.index):
+                if (self.title == "BFS" or self.title == "Greedy") and self.is_search_done(self.index):
                     self.success = True
                     self.final_energy = self.energy[self.index]
                     self.find_path(self.index)

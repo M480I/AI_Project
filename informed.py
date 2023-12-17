@@ -8,7 +8,7 @@ class Greedy(UCS):
         return "Greedy"
 
 
-    def heuristic(self, index):
+    def strong_h(self, index):
 
         cell = self.coords_of_index[index]
 
@@ -61,12 +61,35 @@ class Greedy(UCS):
                     break
 
         nodes.append(cell)
-        return max_possible_bonus + (cal_mst(nodes) * self.table.min_init_weight)
+        return max_possible_bonus - (cal_mst(nodes) * self.table.min_init_weight)
     
 
+    def weak_h(self, index):
+
+        cell = self.coords_of_index[index]
+
+        max_possible_bonus = (self.table.total_bonus - self.total_bonus[index]) * (not self.is_search_done(index))
+
+        unvisited_dests = self.table.destinations_coords.difference(self.visited_dests[index])
+        
+        farthest = max(unvisited_dests, key=lambda dest_cell : man_distance(cell, dest_cell))
+
+        return max_possible_bonus - (man_distance(farthest, cell) * self.table.min_init_weight)  
+
+    
+    def weakest_h(self, index):  
+
+        cell = self.coords_of_index[index]
+
+        max_possible_bonus = (self.table.total_bonus - self.total_bonus[index]) * (not self.is_search_done(index))
+
+        unvisited_dests = len(self.table.destinations) - len(self.visited_dests[index])
+        
+        return max_possible_bonus - (unvisited_dests * self.table.min_init_weight)
+    
 
     def put_fringe(self, index):
-        self.fringe.put((-self.heuristic(index), index))
+        self.fringe.put((-self.strong_h(index), index))
 
 
 class A_star(Greedy):
@@ -75,4 +98,4 @@ class A_star(Greedy):
         return "A*"
     
     def put_fringe(self, index):
-        self.fringe.put((-(self.heuristic(index) + self.energy[index]), index))
+        self.fringe.put((-(self.strong_h(index) + self.energy[index]), index))
